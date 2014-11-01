@@ -59,7 +59,9 @@
     <Reference Include="System.EnterpriseServices" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="sounds\yay.ogg" />
+    <Content Include="images\Grass.png" />
+    <Content Include="images\Tank.png" />
+    <Content Include="sounds\death.mp3" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -70,7 +72,6 @@
   <ItemGroup>
     <Content Include="css\app.css" />
     <Content Include="css\normalize.css" />
-    <Content Include="images\loading.jpg" />
     <Content Include="index.html" />
     <Content Include="packages.config" />
     <None Include="Scripts\jquery-2.1.1.intellisense.js" />

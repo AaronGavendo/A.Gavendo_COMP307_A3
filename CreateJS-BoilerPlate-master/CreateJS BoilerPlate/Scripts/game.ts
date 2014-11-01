@@ -1,13 +1,16 @@
 ﻿var stage: createjs.Stage;
 var queue;
 
+var tank: Tank
+
 function preload(): void {
     queue = new createjs.LoadQueue();
     queue.installPlugin(createjs.Sound);
     queue.addEventListener("complete", init);
     queue.loadManifest([
-        { id: "loading", src: "images/loading.jpg" },
-        { id: "yay", src: "sounds/yay.ogg" }
+        { id: "grass", src: "images/Grass.png" },
+        { id: "tank", src: "images/Tank.png" },
+        { id: "death", src: "sounds/death.mp3" }
     ]);
 }
 
@@ -15,23 +18,38 @@ function init(): void {
     stage = new createjs.Stage(document.getElementById("canvas"));
     stage.enableMouseOver(20);
     createjs.Ticker.setFPS(60);
-    createjs.Ticker.addEventListener("tick", handleTick);
-    gameStart();
+    createjs.Ticker.addEventListener("tick", gameLoop);
+    main();
 }
 
-function handleTick(event):void {
+function gameLoop(event): void {
+    tank.update();
     stage.update();
 }
 
-function gameStart(): void {
-    // Add code here
+class Tank
+{
+    image: createjs.Bitmap;
+    constructor()
+    {
+        this.image = new createjs.Bitmap(queue.getResult("tank"));
+        this.image.regY = this.image.getBounds().height / 2;
+        this.image.y = 200;
+        this.image.x = 700;
+        stage.addChild(this.image);
 
-    // Some example code here - to be replaced
-    var placeholder = new createjs.Bitmap(queue.getResult('loading'));
-    placeholder.regX = placeholder.image.width / 2;
-    placeholder.regY = placeholder.image.height / 2;
-    placeholder.x = stage.canvas.width / 2;
-    placeholder.y = stage.canvas.height / 2;
-    stage.addChild(placeholder);
-    createjs.Sound.play("yay");
+    }
+
+    update()
+    {
+        this.image.y = stage.mouseY;
+
+    }
+}
+
+
+function main(): void
+{
+    tank = new Tank();
+
 }
