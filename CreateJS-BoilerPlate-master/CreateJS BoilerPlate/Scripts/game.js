@@ -2,8 +2,11 @@
 var queue;
 
 var tank;
-var tnt;
-var nazi;
+var tnt = [];
+var nazis = [];
+
+var NAZI_NUM = 4;
+var TNT_NUM = 2;
 
 function preload() {
     queue = new createjs.LoadQueue();
@@ -28,9 +31,13 @@ function init() {
 
 function gameLoop(event) {
     tank.update();
+    for (var t = 0; t < TNT_NUM; t++) {
+        tnt[t].update();
+    }
+    for (var n = 0; n < NAZI_NUM; n++) {
+        nazis[n].update();
+    }
     stage.update();
-    nazi.update();
-    tnt.update();
 }
 
 var Tank = (function () {
@@ -48,6 +55,7 @@ var Tank = (function () {
 })();
 
 var Nazi = (function () {
+    //dx: number;
     function Nazi() {
         this.image = new createjs.Bitmap(queue.getResult("nazi1"));
         this.image.regX = this.image.getBounds().width / 2;
@@ -65,7 +73,8 @@ var Nazi = (function () {
 
     Nazi.prototype.update = function () {
         this.image.x += this.dy;
-        this.image.y += this.dx;
+
+        //this.image.x += this.dy;
         if (this.image.x >= (stage.canvas.width + this.image.getBounds().width)) {
             this.reset();
         }
@@ -97,8 +106,12 @@ var TNT = (function () {
 })();
 
 function main() {
-    nazi = new Nazi();
-    tnt = new TNT();
+    for (var i = 0; i < NAZI_NUM; i++) {
+        nazis[i] = new Nazi();
+    }
+    for (var o = 0; o < TNT_NUM; o++) {
+        tnt[o] = new TNT();
+    }
     tank = new Tank();
 }
 //# sourceMappingURL=game.js.map
