@@ -2,7 +2,7 @@
 var queue;
 
 var tank: Tank
-//var tnt: TNT
+var tnt: TNT
 var nazi: Nazi 
 
 function preload(): void {
@@ -30,6 +30,7 @@ function gameLoop(event): void {
     tank.update();
     stage.update();
     nazi.update();
+    tnt.update();
 }
 
 class Tank
@@ -54,8 +55,7 @@ class Nazi
 {
     image: createjs.Bitmap;
     dy: number;
-    constructor()
-    {
+    constructor(){
         this.image = new createjs.Bitmap(queue.getResult("nazi1"));
         this.image.regX = this.image.getBounds().width / 2;
         this.image.regY = this.image.getBounds().height / 2;
@@ -64,16 +64,37 @@ class Nazi
         stage.addChild(this.image);
     }
 
-    reset()
-    {
-        //this.image.x = Math.floor(Math.random() * stage.canvas.width);
+    reset(){
         this.image.x = 0;
         this.image.y = Math.floor(Math.random() * stage.canvas.height);
-        //this.image.y = this.image.getBounds().height;
     }
 
-    update()
-    {
+    update(){
+        this.image.x += this.dy;
+        if (this.image.x >= (stage.canvas.width + this.image.getBounds().width)) {
+            this.reset();
+        }
+    }
+}
+
+class TNT {
+    image: createjs.Bitmap;
+    dy: number;
+    constructor() {
+        this.image = new createjs.Bitmap(queue.getResult("tnt"));
+        this.image.regX = this.image.getBounds().width / 2;
+        this.image.regY = this.image.getBounds().height / 2;
+        this.reset();
+        this.dy = 5;
+        stage.addChild(this.image);
+    }
+
+    reset() {
+        this.image.x = 0;
+        this.image.y = Math.floor(Math.random() * stage.canvas.height);
+    }
+
+    update() {
         this.image.x += this.dy;
         if (this.image.x >= (stage.canvas.width + this.image.getBounds().width)) {
             this.reset();
@@ -87,6 +108,7 @@ class Nazi
 function main(): void
 {
     nazi = new Nazi();
+    tnt = new TNT();
     tank = new Tank();
 
 
