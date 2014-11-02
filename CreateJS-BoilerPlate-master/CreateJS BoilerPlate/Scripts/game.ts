@@ -55,22 +55,25 @@ class Nazi
 {
     image: createjs.Bitmap;
     dy: number;
+    dx: number;
     constructor(){
         this.image = new createjs.Bitmap(queue.getResult("nazi1"));
         this.image.regX = this.image.getBounds().width / 2;
         this.image.regY = this.image.getBounds().height / 2;
         this.reset();
-        this.dy = 5;
         stage.addChild(this.image);
     }
 
-    reset(){
+    reset() {
+        this.dy = Math.floor(Math.random() * 5 + 5); //Random speed of TNT
+        //this.dx = Math.floor(Math.random() * 2 - 1); //Makes the tilt of the enemy solider
         this.image.x = 0;
         this.image.y = Math.floor(Math.random() * stage.canvas.height);
     }
 
     update(){
         this.image.x += this.dy;
+        this.image.y += this.dx;
         if (this.image.x >= (stage.canvas.width + this.image.getBounds().width)) {
             this.reset();
         }
@@ -80,12 +83,13 @@ class Nazi
 class TNT {
     image: createjs.Bitmap;
     dy: number;
+
     constructor() {
         this.image = new createjs.Bitmap(queue.getResult("tnt"));
         this.image.regX = this.image.getBounds().width / 2;
         this.image.regY = this.image.getBounds().height / 2;
         this.reset();
-        this.dy = 5;
+        this.dy = 4;
         stage.addChild(this.image);
     }
 
@@ -104,12 +108,9 @@ class TNT {
 
 
 
-
 function main(): void
 {
     nazi = new Nazi();
     tnt = new TNT();
     tank = new Tank();
-
-
 }

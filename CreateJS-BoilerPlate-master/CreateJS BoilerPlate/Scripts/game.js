@@ -53,16 +53,19 @@ var Nazi = (function () {
         this.image.regX = this.image.getBounds().width / 2;
         this.image.regY = this.image.getBounds().height / 2;
         this.reset();
-        this.dy = 5;
         stage.addChild(this.image);
     }
     Nazi.prototype.reset = function () {
+        this.dy = Math.floor(Math.random() * 5 + 5); //Random speed of TNT
+
+        //this.dx = Math.floor(Math.random() * 2 - 1); //Makes the tilt of the enemy solider
         this.image.x = 0;
         this.image.y = Math.floor(Math.random() * stage.canvas.height);
     };
 
     Nazi.prototype.update = function () {
         this.image.x += this.dy;
+        this.image.y += this.dx;
         if (this.image.x >= (stage.canvas.width + this.image.getBounds().width)) {
             this.reset();
         }
@@ -76,7 +79,7 @@ var TNT = (function () {
         this.image.regX = this.image.getBounds().width / 2;
         this.image.regY = this.image.getBounds().height / 2;
         this.reset();
-        this.dy = 5;
+        this.dy = 4;
         stage.addChild(this.image);
     }
     TNT.prototype.reset = function () {
