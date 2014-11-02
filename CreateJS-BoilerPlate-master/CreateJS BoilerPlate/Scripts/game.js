@@ -3,6 +3,9 @@ var queue;
 
 var tank;
 
+//var tnt: TNT
+var nazi;
+
 function preload() {
     queue = new createjs.LoadQueue();
     queue.installPlugin(createjs.Sound);
@@ -10,6 +13,8 @@ function preload() {
     queue.loadManifest([
         { id: "grass", src: "images/Grass.png" },
         { id: "tank", src: "images/Tank.png" },
+        { id: "tnt", src: "images/TNT.png" },
+        { id: "nazi1", src: "images/Nazi1.png" },
         { id: "death", src: "sounds/death.mp3" }
     ]);
 }
@@ -25,6 +30,7 @@ function init() {
 function gameLoop(event) {
     tank.update();
     stage.update();
+    nazi.update();
 }
 
 var Tank = (function () {
@@ -41,7 +47,33 @@ var Tank = (function () {
     return Tank;
 })();
 
+var Nazi = (function () {
+    function Nazi() {
+        this.image = new createjs.Bitmap(queue.getResult("nazi1"));
+        this.image.regX = this.image.getBounds().width / 2;
+        this.image.regY = this.image.getBounds().height / 2;
+        this.reset();
+        this.dy = 5;
+        stage.addChild(this.image);
+    }
+    Nazi.prototype.reset = function () {
+        //this.image.x = Math.floor(Math.random() * stage.canvas.width);
+        this.image.x = 0;
+        this.image.y = Math.floor(Math.random() * stage.canvas.height);
+        //this.image.y = this.image.getBounds().height;
+    };
+
+    Nazi.prototype.update = function () {
+        this.image.x += this.dy;
+        if (this.image.x >= (stage.canvas.width + this.image.getBounds().width)) {
+            this.reset();
+        }
+    };
+    return Nazi;
+})();
+
 function main() {
+    nazi = new Nazi();
     tank = new Tank();
 }
 //# sourceMappingURL=game.js.map
