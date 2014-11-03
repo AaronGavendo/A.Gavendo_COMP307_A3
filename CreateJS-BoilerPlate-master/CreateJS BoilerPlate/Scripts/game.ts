@@ -5,9 +5,14 @@ var grass: Grass
 var tank: Tank
 var tnt = [];
 var nazis = [];
+var scoreboard: Scoreboard;
 
+var LIVES_NUM = 3;
 var NAZI_NUM = 4;
 var TNT_NUM = 2;
+
+var GAME_FONT = "34px Consolas";
+var FONT_COLOUR = "#FF0000";
 
 function preload(): void {
     queue = new createjs.LoadQueue();
@@ -19,6 +24,7 @@ function preload(): void {
         { id: "tnt", src: "images/TNT.png" },
         { id: "nazi1", src: "images/Nazi1.png" },
         { id: "boom", src: "sounds/boom.wav" },
+        { id: "engine", src: "sounds/engine.wav" },
         { id: "death", src: "sounds/death.mp3" }
     ]);
 }
@@ -43,6 +49,7 @@ function gameLoop(event): void {
     }
 
     collision();
+    scoreboard.update();
     stage.update();
 }
 
@@ -51,10 +58,11 @@ class Tank
     image: createjs.Bitmap;
     constructor() {
         this.image = new createjs.Bitmap(queue.getResult("tank"));
-        this.image.regY = this.image.getBounds().height / 2;
+        this.image.regY = this.image.getBounds().height * 0.5;
         this.image.y = 200;
         this.image.x = 700;
         stage.addChild(this.image);
+        createjs.Sound.play("engine", 0, 0, 0, -1, 1, 1);
 
     }
 
@@ -71,8 +79,8 @@ class Nazi
     //dx: number;
     constructor(){
         this.image = new createjs.Bitmap(queue.getResult("nazi1"));
-        this.image.regX = this.image.getBounds().width / 2;
-        this.image.regY = this.image.getBounds().height / 2;
+        this.image.regX = this.image.getBounds().width * 0.5;
+        this.image.regY = this.image.getBounds().height * 0.5;
         this.reset();
         stage.addChild(this.image);
     }
@@ -99,8 +107,8 @@ class TNT {
 
     constructor() {
         this.image = new createjs.Bitmap(queue.getResult("tnt"));
-        this.image.regX = this.image.getBounds().width / 2;
-        this.image.regY = this.image.getBounds().height / 2;
+        this.image.regX = this.image.getBounds().width * 0.5;
+        this.image.regY = this.image.getBounds().height * 0.5;
         this.reset();
         this.dy = 4;
         stage.addChild(this.image);
@@ -155,8 +163,9 @@ function tankAndTNT()
         p2.x = tnt[a].image.x;
         p2.y = tnt[a].image.y;
 
-        if (distance(p1, p2) < ((tank.image.getBounds().height / 2) + (tnt[a].image.getBounds().height / 2))) {
+        if (distance(p1, p2) < ((tank.image.getBounds().height * 0.5) + (tnt[a].image.getBounds().height * 0.5))) {
             createjs.Sound.play("boom");
+            scoreboard.lives -= 1;
             tnt[a].reset();
             stage.update();
 
@@ -178,8 +187,9 @@ function tankAndNazi() {
         p2.x = nazis[a].image.x;
         p2.y = nazis[a].image.y;
 
-        if (distance(p1, p2) < ((tank.image.getBounds().height / 2) + (nazis[a].image.getBounds().height / 2))) {
+        if (distance(p1, p2) < ((tank.image.getBounds().height * 0.5) + (nazis[a].image.getBounds().height * 0.5))) {
             createjs.Sound.play("death");
+            scoreboard.score += 1;
             nazis[a].reset();
             stage.update();
 
@@ -191,13 +201,9 @@ function tankAndNazi() {
 function collision() {
     tankAndTNT();
     tankAndNazi();
-
-
-
 }
 
-
-//Distance between two points
+//Distance between two points //From Teacher Example
 function distance(p1: createjs.Point, p2: createjs.Point): number {
     var result: number = 0;
     var xPoints: number = 0;
@@ -215,6 +221,22 @@ function distance(p1: createjs.Point, p2: createjs.Point): number {
 
 }
 
+class Scoreboard {
+    lives: number = LIVES_NUM;
+    score: number = 0;
+    label: createjs.Text;
+    labelString: string = "";
+    constructor() {
+        this.label = new createjs.Text(this.labelString, GAME_FONT, FONT_COLOUR);
+        this.update();
+        stage.addChild(this.label);
+    }
+    update() {
+        this.labelString = "Lives: " + this.lives.toString() + " Kills: " + this.score.toString();
+        this.label.text = this.labelString;
+    }
+}
+
 function main(): void
 {
     grass = new Grass();
@@ -225,5 +247,6 @@ function main(): void
         tnt[o] = new TNT();
     }
     tank = new Tank();
+    scoreboard = new Scoreboard();
 
 }

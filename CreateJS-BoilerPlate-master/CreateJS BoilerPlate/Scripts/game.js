@@ -5,9 +5,14 @@ var grass;
 var tank;
 var tnt = [];
 var nazis = [];
+var scoreboard;
 
+var LIVES_NUM = 3;
 var NAZI_NUM = 4;
 var TNT_NUM = 2;
+
+var GAME_FONT = "34px Consolas";
+var FONT_COLOUR = "#FF0000";
 
 function preload() {
     queue = new createjs.LoadQueue();
@@ -19,6 +24,7 @@ function preload() {
         { id: "tnt", src: "images/TNT.png" },
         { id: "nazi1", src: "images/Nazi1.png" },
         { id: "boom", src: "sounds/boom.wav" },
+        { id: "engine", src: "sounds/engine.wav" },
         { id: "death", src: "sounds/death.mp3" }
     ]);
 }
@@ -44,16 +50,18 @@ function gameLoop(event) {
     }
 
     collision();
+    scoreboard.update();
     stage.update();
 }
 
 var Tank = (function () {
     function Tank() {
         this.image = new createjs.Bitmap(queue.getResult("tank"));
-        this.image.regY = this.image.getBounds().height / 2;
+        this.image.regY = this.image.getBounds().height * 0.5;
         this.image.y = 200;
         this.image.x = 700;
         stage.addChild(this.image);
+        createjs.Sound.play("engine", 0, 0, 0, -1, 1, 1);
     }
     Tank.prototype.update = function () {
         this.image.y = stage.mouseY;
@@ -65,8 +73,8 @@ var Nazi = (function () {
     //dx: number;
     function Nazi() {
         this.image = new createjs.Bitmap(queue.getResult("nazi1"));
-        this.image.regX = this.image.getBounds().width / 2;
-        this.image.regY = this.image.getBounds().height / 2;
+        this.image.regX = this.image.getBounds().width * 0.5;
+        this.image.regY = this.image.getBounds().height * 0.5;
         this.reset();
         stage.addChild(this.image);
     }
@@ -92,8 +100,8 @@ var Nazi = (function () {
 var TNT = (function () {
     function TNT() {
         this.image = new createjs.Bitmap(queue.getResult("tnt"));
-        this.image.regX = this.image.getBounds().width / 2;
-        this.image.regY = this.image.getBounds().height / 2;
+        this.image.regX = this.image.getBounds().width * 0.5;
+        this.image.regY = this.image.getBounds().height * 0.5;
         this.reset();
         this.dy = 4;
         stage.addChild(this.image);
@@ -145,8 +153,9 @@ function tankAndTNT() {
         p2.x = tnt[a].image.x;
         p2.y = tnt[a].image.y;
 
-        if (distance(p1, p2) < ((tank.image.getBounds().height / 2) + (tnt[a].image.getBounds().height / 2))) {
+        if (distance(p1, p2) < ((tank.image.getBounds().height * 0.5) + (tnt[a].image.getBounds().height * 0.5))) {
             createjs.Sound.play("boom");
+            scoreboard.lives -= 1;
             tnt[a].reset();
             stage.update();
         }
@@ -166,8 +175,9 @@ function tankAndNazi() {
         p2.x = nazis[a].image.x;
         p2.y = nazis[a].image.y;
 
-        if (distance(p1, p2) < ((tank.image.getBounds().height / 2) + (nazis[a].image.getBounds().height / 2))) {
+        if (distance(p1, p2) < ((tank.image.getBounds().height * 0.5) + (nazis[a].image.getBounds().height * 0.5))) {
             createjs.Sound.play("death");
+            scoreboard.score += 1;
             nazis[a].reset();
             stage.update();
         }
@@ -179,7 +189,7 @@ function collision() {
     tankAndNazi();
 }
 
-//Distance between two points
+//Distance between two points //From Teacher Example
 function distance(p1, p2) {
     var result = 0;
     var xPoints = 0;
@@ -196,6 +206,22 @@ function distance(p1, p2) {
     return result;
 }
 
+var Scoreboard = (function () {
+    function Scoreboard() {
+        this.lives = LIVES_NUM;
+        this.score = 0;
+        this.labelString = "";
+        this.label = new createjs.Text(this.labelString, GAME_FONT, FONT_COLOUR);
+        this.update();
+        stage.addChild(this.label);
+    }
+    Scoreboard.prototype.update = function () {
+        this.labelString = "Lives: " + this.lives.toString() + " Kills: " + this.score.toString();
+        this.label.text = this.labelString;
+    };
+    return Scoreboard;
+})();
+
 function main() {
     grass = new Grass();
     for (var i = 0; i < NAZI_NUM; i++) {
@@ -205,5 +231,6 @@ function main() {
         tnt[o] = new TNT();
     }
     tank = new Tank();
+    scoreboard = new Scoreboard();
 }
 //# sourceMappingURL=game.js.map
