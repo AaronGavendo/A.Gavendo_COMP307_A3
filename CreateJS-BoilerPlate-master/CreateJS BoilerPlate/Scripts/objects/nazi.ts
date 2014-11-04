@@ -1,9 +1,10 @@
-﻿module objects {
+﻿/// <reference path="../managers/assets.ts" />
+module objects {
    export class Nazi {
         image: createjs.Bitmap;
         dy: number;
         constructor() {
-            this.image = new createjs.Bitmap(queue.getResult("nazi1"));
+            this.image = new createjs.Bitmap(managers.Assets.loader.getResult("nazi1"));
             this.image.regX = this.image.getBounds().width * 0.5;
             this.image.regY = this.image.getBounds().height * 0.5;
             this.reset();

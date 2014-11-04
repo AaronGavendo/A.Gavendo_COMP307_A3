@@ -1,4 +1,5 @@
-﻿/// <reference path="objects/scoreboard.ts" />
+﻿/// <reference path="managers/assets.ts" />
+/// <reference path="objects/scoreboard.ts" />
 /// <reference path="objects/tanks.ts" />
 /// <reference path="objects/grass.ts" />
 /// <reference path="objects/tnt.ts" />
@@ -6,7 +7,6 @@
 
 
 var stage: createjs.Stage;
-var queue;
 
 var grass: objects.Grass
 var tank: objects.Tank
@@ -20,7 +20,7 @@ var TNT_NUM = 2;
 
 var GAME_FONT = "34px Consolas";
 var FONT_COLOUR = "#FF0000";
-
+/*
 function preload(): void {
     queue = new createjs.LoadQueue();
     queue.installPlugin(createjs.Sound);
@@ -34,7 +34,7 @@ function preload(): void {
         { id: "engine", src: "sounds/engine.wav" },
         { id: "death", src: "sounds/death.mp3" }
     ]);
-}
+}*/
 
 function init(): void {
     stage = new createjs.Stage(document.getElementById("canvas"));

@@ -1,8 +1,9 @@
-﻿var objects;
+﻿/// <reference path="../managers/assets.ts" />
+var objects;
 (function (objects) {
     var Tank = (function () {
         function Tank() {
-            this.image = new createjs.Bitmap(queue.getResult("tank"));
+            this.image = new createjs.Bitmap(managers.Assets.loader.getResult("tank"));
             this.image.regY = this.image.getBounds().height * 0.5;
             this.image.y = 200;
             this.image.x = 700;

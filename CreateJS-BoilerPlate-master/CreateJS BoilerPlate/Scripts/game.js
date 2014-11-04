@@ -1,10 +1,10 @@
-﻿/// <reference path="objects/scoreboard.ts" />
+﻿/// <reference path="managers/assets.ts" />
+/// <reference path="objects/scoreboard.ts" />
 /// <reference path="objects/tanks.ts" />
 /// <reference path="objects/grass.ts" />
 /// <reference path="objects/tnt.ts" />
 /// <reference path="objects/nazi.ts" />
 var stage;
-var queue;
 
 var grass;
 var tank;
@@ -19,21 +19,21 @@ var TNT_NUM = 2;
 var GAME_FONT = "34px Consolas";
 var FONT_COLOUR = "#FF0000";
 
-function preload() {
-    queue = new createjs.LoadQueue();
-    queue.installPlugin(createjs.Sound);
-    queue.addEventListener("complete", init);
-    queue.loadManifest([
-        { id: "grass", src: "images/Grass.png" },
-        { id: "tank", src: "images/Tank.png" },
-        { id: "tnt", src: "images/TNT.png" },
-        { id: "nazi1", src: "images/Nazi1.png" },
-        { id: "boom", src: "sounds/boom.wav" },
-        { id: "engine", src: "sounds/engine.wav" },
-        { id: "death", src: "sounds/death.mp3" }
-    ]);
-}
-
+/*
+function preload(): void {
+queue = new createjs.LoadQueue();
+queue.installPlugin(createjs.Sound);
+queue.addEventListener("complete", init);
+queue.loadManifest([
+{ id: "grass", src: "images/Grass.png" },
+{ id: "tank", src: "images/Tank.png" },
+{ id: "tnt", src: "images/TNT.png" },
+{ id: "nazi1", src: "images/Nazi1.png" },
+{ id: "boom", src: "sounds/boom.wav" },
+{ id: "engine", src: "sounds/engine.wav" },
+{ id: "death", src: "sounds/death.mp3" }
+]);
+}*/
 function init() {
     stage = new createjs.Stage(document.getElementById("canvas"));
     stage.enableMouseOver(20);

@@ -1,8 +1,9 @@
-﻿var objects;
+﻿/// <reference path="../managers/assets.ts" />
+var objects;
 (function (objects) {
     var Grass = (function () {
         function Grass() {
-            this.image = new createjs.Bitmap(queue.getResult("grass"));
+            this.image = new createjs.Bitmap(managers.Assets.loader.getResult("grass"));
             this.reset();
             this.dy = 4; //Keep same as TNT to make look like its on ground
             stage.addChild(this.image);

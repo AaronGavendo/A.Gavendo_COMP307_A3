@@ -1,4 +1,5 @@
-﻿module objects {
+﻿/// <reference path="../managers/assets.ts" />
+module objects {
     export class Scoreboard {
         lives: number = LIVES_NUM;
         score: number = 0;

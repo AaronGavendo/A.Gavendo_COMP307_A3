@@ -1,8 +1,9 @@
-﻿module objects {
+﻿/// <reference path="../managers/assets.ts" />
+module objects {
     export class Tank {
         image: createjs.Bitmap;
         constructor() {
-            this.image = new createjs.Bitmap(queue.getResult("tank"));
+            this.image = new createjs.Bitmap(managers.Assets.loader.getResult("tank"));
             this.image.regY = this.image.getBounds().height * 0.5;
             this.image.y = 200;
             this.image.x = 700;

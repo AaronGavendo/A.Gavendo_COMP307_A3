@@ -1,4 +1,5 @@
-﻿var objects;
+﻿/// <reference path="../managers/assets.ts" />
+var objects;
 (function (objects) {
     var Scoreboard = (function () {
         function Scoreboard() {
