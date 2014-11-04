@@ -109,6 +109,11 @@
     <TypeScriptCompile Include="Scripts\createjs-lib.d.ts" />
     <TypeScriptCompile Include="Scripts\easeljs.d.ts" />
     <TypeScriptCompile Include="Scripts\game.ts" />
+    <TypeScriptCompile Include="Scripts\objects\grass.ts" />
+    <TypeScriptCompile Include="Scripts\objects\nazi.ts" />
+    <TypeScriptCompile Include="Scripts\objects\scoreboard.ts" />
+    <TypeScriptCompile Include="Scripts\objects\tanks.ts" />
+    <TypeScriptCompile Include="Scripts\objects\tnt.ts" />
     <TypeScriptCompile Include="Scripts\preloadjs.d.ts" />
     <TypeScriptCompile Include="Scripts\soundjs.d.ts" />
     <TypeScriptCompile Include="Scripts\tweenjs.d.ts" />

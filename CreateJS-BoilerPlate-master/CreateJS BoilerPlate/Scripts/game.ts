@@ -1,11 +1,18 @@
-﻿var stage: createjs.Stage;
+﻿/// <reference path="objects/scoreboard.ts" />
+/// <reference path="objects/tanks.ts" />
+/// <reference path="objects/grass.ts" />
+/// <reference path="objects/tnt.ts" />
+/// <reference path="objects/nazi.ts" />
+
+
+var stage: createjs.Stage;
 var queue;
 
-var grass: Grass
-var tank: Tank
+var grass: objects.Grass
+var tank: objects.Tank
 var tnt = [];
 var nazis = [];
-var scoreboard: Scoreboard;
+var scoreboard: objects.Scoreboard;
 
 var LIVES_NUM = 3;
 var NAZI_NUM = 4;
@@ -53,101 +60,6 @@ function gameLoop(event): void {
     stage.update();
 }
 
-class Tank
-{
-    image: createjs.Bitmap;
-    constructor() {
-        this.image = new createjs.Bitmap(queue.getResult("tank"));
-        this.image.regY = this.image.getBounds().height * 0.5;
-        this.image.y = 200;
-        this.image.x = 700;
-        stage.addChild(this.image);
-        createjs.Sound.play("engine", 0, 0, 0, -1, 1, 1);
-
-    }
-
-    update() {
-        this.image.y = stage.mouseY;
-
-    }
-}
-
-class Nazi
-{
-    image: createjs.Bitmap;
-    dy: number;
-    //dx: number;
-    constructor(){
-        this.image = new createjs.Bitmap(queue.getResult("nazi1"));
-        this.image.regX = this.image.getBounds().width * 0.5;
-        this.image.regY = this.image.getBounds().height * 0.5;
-        this.reset();
-        stage.addChild(this.image);
-    }
-
-    reset() {
-        this.dy = Math.floor(Math.random() * 5 + 5); //Random speed of TNT
-        //this.dx = Math.floor(Math.random() * 2 - 1); //Makes the tilt of the enemy solider
-        this.image.x = 0;
-        this.image.y = Math.floor(Math.random() * stage.canvas.height);
-    }
-
-    update(){
-        this.image.x += this.dy;
-        //this.image.x += this.dy;
-        if (this.image.x >= (stage.canvas.width + this.image.getBounds().width)) {
-            this.reset();
-        }
-    }
-}
-
-class TNT {
-    image: createjs.Bitmap;
-    dy: number;
-
-    constructor() {
-        this.image = new createjs.Bitmap(queue.getResult("tnt"));
-        this.image.regX = this.image.getBounds().width * 0.5;
-        this.image.regY = this.image.getBounds().height * 0.5;
-        this.reset();
-        this.dy = 4;
-        stage.addChild(this.image);
-    }
-
-    reset() {
-        this.image.x = 0;
-        this.image.y = Math.floor(Math.random() * stage.canvas.height);
-    }
-
-    update() {
-        this.image.x += this.dy;
-        if (this.image.x >= (stage.canvas.width + this.image.getBounds().width)) {
-            this.reset();
-        }
-    }
-}
-
-class Grass {
-    image: createjs.Bitmap;
-    dy: number;
-    constructor() {
-        this.image = new createjs.Bitmap(queue.getResult("grass"));
-        this.reset();
-        this.dy = 4; //Keep same as TNT to make look like its on ground
-        stage.addChild(this.image);
-    }
-
-    reset() {
-        this.image.x = -this.image.getBounds().width + stage.canvas.width;
-    }
-
-    update() {
-        this.image.x += this.dy;
-        if (this.image.x >= 0) {
-            this.reset();
-        }
-    }
-}
 
 function tankAndTNT()
 {
@@ -218,35 +130,18 @@ function distance(p1: createjs.Point, p2: createjs.Point): number {
     result = Math.sqrt(xPoints + yPoints);
 
     return result;
-
-}
-
-class Scoreboard {
-    lives: number = LIVES_NUM;
-    score: number = 0;
-    label: createjs.Text;
-    labelString: string = "";
-    constructor() {
-        this.label = new createjs.Text(this.labelString, GAME_FONT, FONT_COLOUR);
-        this.update();
-        stage.addChild(this.label);
-    }
-    update() {
-        this.labelString = "Lives: " + this.lives.toString() + " Kills: " + this.score.toString();
-        this.label.text = this.labelString;
-    }
 }
 
 function main(): void
 {
-    grass = new Grass();
+    grass = new objects.Grass();
     for (var i = 0; i < NAZI_NUM; i++) {
-        nazis[i] = new Nazi();
+        nazis[i] = new objects.Nazi();
     }
     for (var o = 0; o < TNT_NUM; o++) {
-        tnt[o] = new TNT();
+        tnt[o] = new objects.TNT();
     }
-    tank = new Tank();
-    scoreboard = new Scoreboard();
+    tank = new objects.Tank();
+    scoreboard = new objects.Scoreboard();
 
 }
