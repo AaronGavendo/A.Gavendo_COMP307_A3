@@ -20,7 +20,9 @@ module objects {
             if (this.image.x >= 0) {
                 this.reset();
             }
+
         }
     }
 
 }
+

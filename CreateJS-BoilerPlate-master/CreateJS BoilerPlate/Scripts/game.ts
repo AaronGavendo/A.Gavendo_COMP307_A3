@@ -20,26 +20,10 @@ var TNT_NUM = 2;
 
 var GAME_FONT = "34px Consolas";
 var FONT_COLOUR = "#FF0000";
-/*
-function preload(): void {
-    queue = new createjs.LoadQueue();
-    queue.installPlugin(createjs.Sound);
-    queue.addEventListener("complete", init);
-    queue.loadManifest([
-        { id: "grass", src: "images/Grass.png" },
-        { id: "tank", src: "images/Tank.png" },
-        { id: "tnt", src: "images/TNT.png" },
-        { id: "nazi1", src: "images/Nazi1.png" },
-        { id: "boom", src: "sounds/boom.wav" },
-        { id: "engine", src: "sounds/engine.wav" },
-        { id: "death", src: "sounds/death.mp3" }
-    ]);
-}*/
 
 function init(): void {
     stage = new createjs.Stage(document.getElementById("canvas"));
     stage.enableMouseOver(20);
-    //stage.cursor = "none"; If you want to hide Mouse
     createjs.Ticker.setFPS(60);
     createjs.Ticker.addEventListener("tick", gameLoop);
     main();

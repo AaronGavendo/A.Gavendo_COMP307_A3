@@ -3,6 +3,7 @@ module objects {
     export class Scoreboard {
         lives: number = LIVES_NUM;
         score: number = 0;
+        missed: number = 0;
         label: createjs.Text;
         labelString: string = "";
         constructor() {
@@ -11,7 +12,7 @@ module objects {
             stage.addChild(this.label);
         }
         update() {
-            this.labelString = "Lives: " + this.lives.toString() + " Kills: " + this.score.toString();
+            this.labelString = "Lives: " + this.lives.toString() + " Kills: " + this.score.toString() + " Missed: " + this.missed.toString();
             this.label.text = this.labelString;
         }
     }
