@@ -12,8 +12,13 @@ var objects;
             stage.addChild(this.label);
         }
         Scoreboard.prototype.update = function () {
-            this.labelString = "Lives: " + this.lives.toString() + " Kills: " + this.score.toString() + " Missed: " + this.missed.toString();
-            this.label.text = this.labelString;
+            if (this.lives <= 0) {
+                this.labelString = "YOU ARE DEAD, STOP PLAYING";
+                this.label.text = this.labelString;
+            } else {
+                this.labelString = "Lives: " + this.lives.toString() + " Kills: " + this.score.toString() + " Missed: " + this.missed.toString();
+                this.label.text = this.labelString;
+            }
         };
         return Scoreboard;
     })();
