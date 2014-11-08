@@ -14,7 +14,13 @@ module objects {
         update() {
 
             if (this.lives <= 0) {
+                //var finalScore = this.score.toString();
                 this.labelString = "YOU ARE DEAD, STOP PLAYING";
+                this.label.text = this.labelString;
+            }
+            else if (this.missed > 12)
+            {
+                this.labelString = "You missed 12! Your village was destroyed";
                 this.label.text = this.labelString;
             }
             else {
